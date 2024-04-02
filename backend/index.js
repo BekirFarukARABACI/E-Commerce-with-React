@@ -52,7 +52,7 @@ const Basket = mongoose.model("Basket", basketScheme)
 //Basket Collection
 
 //Order Collection
-const orderScheme = new mongoose({
+const orderScheme = new mongoose.Schema({
     _id: String,
     productID: String,
     userID: String,
