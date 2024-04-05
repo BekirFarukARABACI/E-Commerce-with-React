@@ -4,10 +4,27 @@ import axios from "axios"
 function ProductComponent() {
     const [products, setProducts] = useState([])
 
-    useEffect(async () => {
+    const getAll = async () => {
         const response = await axios.get("http://localhost:5000/products")
         setProducts(response.data)
+    }
+
+    useEffect(async () => {
+        await getAll()
     }, [])
+
+
+
+
+    const remove = async (_id) => {
+        let model = { _id: _id };
+        let response = await axios.post("http://localhost:5000/products/remove", model);
+        alert(response.data.message);
+        await getAll();
+    }
+
+
+
 
     return (
         <>
@@ -31,7 +48,7 @@ function ProductComponent() {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {products.map((product, index) => {
+                                    {products.map((product, index) => (
                                         <tr>
                                             <td>{index + 1}</td>
                                             <td>
@@ -42,13 +59,13 @@ function ProductComponent() {
                                             <td>{product.stock}</td>
                                             <td>{product.price}</td>
                                             <td>
-                                                <button className="btn btn-outline-danger btn-sm">
+                                                <button onClick={() => remove(product._id)} className='btn btn-outline-danger btn-sm'>
                                                     Sil
                                                 </button>
                                             </td>
 
                                         </tr>
-                                    })}
+                                    ))}
                                 </tbody>
                             </table>
                         </div>

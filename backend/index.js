@@ -162,6 +162,19 @@ app.post("/products/add", upload.single("image"), async (req, res)=>{
 });
 //Add product
 
+//Remove Product
+app.post("/products/remove",async(req,res)=>{
+    try {
+        const {_id} = req.body
+        await Product.findByIdAndDelete(_id)
+        res.json({message: "Silme işlemi başarıyla gerçekleşti..."})
+    } catch (error) {
+        res.status(500).json({message: error.message});
+    }
+})
+//Remove Product
+
+
 const port = 5000;
 app.listen(5000, () => {
     console.log("Uygulama http://localhost:" + port + " üzerinden ayakta")
